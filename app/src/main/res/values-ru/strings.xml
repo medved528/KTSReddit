@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KTSReddit</string>
+    <string name="start_screen_button_text">НАЖМИ МЕНЯ!</string>
+    <string name="start_screen_text_label">Реддит клиент</string>
+    <string name="start_screen_toast_text">Это работает!</string>
+</resources>
