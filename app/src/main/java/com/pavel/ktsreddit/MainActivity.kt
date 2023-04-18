@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,11 +29,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
+            val mutableBgColor = remember{ mutableStateOf(Color.DarkGray) }
             val configuration = LocalConfiguration.current
             if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-                StartScreenPortrait()
+                StartScreenPortrait(color=mutableBgColor.value)
             } else {
-                StartScreenLandscape()
+                mutableBgColor.value = Color.LightGray
+                StartScreenLandscape(color=mutableBgColor.value)
             }
         }
     }
@@ -55,9 +60,10 @@ fun StartScreenButton() {
 
 @Composable
 fun StartScreenImage() {
-    Image(modifier = Modifier
-        .padding(16.dp)
-        .size(150.dp, 220.dp),
+    Image(
+        modifier = Modifier
+            .padding(16.dp)
+            .size(150.dp, 220.dp),
         imageVector = ImageVector.vectorResource(R.drawable.reddit_logo),
         contentDescription = null
     )
@@ -65,18 +71,19 @@ fun StartScreenImage() {
 
 @Composable
 fun StartScreenLabel() {
-    Text(modifier = Modifier
-        .padding(16.dp),
+    Text(
+        modifier = Modifier
+            .padding(16.dp),
         text = stringResource(id = R.string.start_screen_text_label), fontSize = 24.sp)
 }
 
 @Composable
-fun StartScreenPortrait() {
+fun StartScreenPortrait(color: Color) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .background(color = Color.DarkGray),
+            .background(color = color),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
         StartScreenImage()
@@ -86,17 +93,18 @@ fun StartScreenPortrait() {
 }
 
 @Composable
-fun StartScreenLandscape() {
+fun StartScreenLandscape(color: Color) {
     Row(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .background(Color.LightGray),
+            .background(color),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically) {
         StartScreenImage()
 
-        Column(modifier = Modifier,
+        Column(
+            modifier = Modifier,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
             StartScreenLabel()
